@@ -2,32 +2,20 @@ import java.util.Scanner;
 
 public class Echo {
     public static void main(String[] args) {
-        System.out.println("""
-                ------------------------------------------------------------
-                Hello! I'm Echo.
-                What can I do for you?
-                ------------------------------------------------------------
-                """);
+        System.out.print(Message.getWelcomeMessage());
 
         Scanner scanner = new Scanner(System.in);
         while (true) {
             String userInput = scanner.nextLine();
             if (userInput.equals("bye")) {
                 break;
+            } else if (userInput.equals("list")) {
+
+            } else {
+                System.out.print(Message.getAddedMessage(userInput));
             }
-            System.out.printf("""
-                    
-                    ------------------------------------------------------------
-                    Added: %s
-                    ------------------------------------------------------------
-                    
-                    """, userInput);
         }
 
-        System.out.println("""
-                \n------------------------------------------------------------
-                Bye. Hope to see you again soon!
-                ------------------------------------------------------------
-                """);
+        System.out.print(Message.getByeMessage());
     }
 }
