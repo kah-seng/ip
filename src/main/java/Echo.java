@@ -46,19 +46,57 @@ public class Echo {
                     for (int i = 1; i < byIndex; i++) {
                         deadlineNameBuilder.append(splitUserInput[i]).append(" ");
                     }
-                    // Remove trailing space
                     deadlineNameBuilder.deleteCharAt(deadlineNameBuilder.length() - 1);
 
                     StringBuilder deadlineByBuilder = new StringBuilder();
                     for (int i = byIndex + 1; i < splitUserInput.length; i++) {
                         deadlineByBuilder.append(splitUserInput[i]).append(" ");
                     }
-                    // Remove trailing space
                     deadlineByBuilder.deleteCharAt(deadlineByBuilder.length() - 1);
 
                     Deadline deadline = new Deadline(deadlineNameBuilder.toString(), deadlineByBuilder.toString());
                     taskManager.addTask(deadline);
                     System.out.print(Message.getAddedMessage(deadline.toString()));
+                }
+            } else if (splitUserInput[0].equals("event")) {
+                int fromIndex = -1;
+                int toIndex = -1;
+                for (int i = 0; i < splitUserInput.length; i++) {
+                    if (splitUserInput[i].equals("/from")) {
+                        fromIndex = i;
+                    } else if (splitUserInput[i].equals("/to")) {
+                        toIndex = i;
+                    }
+                    if (fromIndex > 0 && toIndex > 0) {
+                        break;
+                    }
+                }
+
+                if (fromIndex < 0 || toIndex < 0) {
+                    // TODO
+                } else {
+                    StringBuilder eventNameBuilder = new StringBuilder();
+                    for (int i = 1; i < fromIndex; i++) {
+                        eventNameBuilder.append(splitUserInput[i]).append(" ");
+                    }
+                    eventNameBuilder.deleteCharAt(eventNameBuilder.length() - 1);
+
+                    StringBuilder eventFromBuilder = new StringBuilder();
+                    for (int i = fromIndex + 1; i < toIndex; i++) {
+                        eventFromBuilder.append(splitUserInput[i]).append(" ");
+                    }
+                    eventFromBuilder.deleteCharAt(eventFromBuilder.length() - 1);
+
+                    StringBuilder eventToBuilder = new StringBuilder();
+                    for (int i = toIndex + 1; i < splitUserInput.length; i++) {
+                        eventToBuilder.append(splitUserInput[i]).append(" ");
+                    }
+                    eventToBuilder.deleteCharAt(eventToBuilder.length() - 1);
+
+                    Event event = new Event(eventNameBuilder.toString(),
+                            eventFromBuilder.toString(), eventToBuilder.toString());
+                    taskManager.addTask(event);
+                    System.out.print(Message.getAddedMessage(event.toString()));
                 }
             }
         }
