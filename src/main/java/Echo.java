@@ -6,19 +6,15 @@ public class Echo {
         System.out.print(Message.getWelcomeMessage());
 
         Scanner scanner = new Scanner(System.in);
-        ArrayList<String> userInputs = new ArrayList<>();
+        TaskManager taskManager = new TaskManager();
         while (true) {
             String userInput = scanner.nextLine();
             if (userInput.equals("bye")) {
                 break;
             } else if (userInput.equals("list")) {
-                System.out.println("\n" + Message.DIVIDER);
-                for (int i = 0; i < userInputs.size(); i++) {
-                    System.out.printf("%d. %s\n", i + 1, userInputs.get(i));
-                }
-                System.out.println(Message.DIVIDER + "\n");
+                System.out.print(Message.getListMessage(taskManager));
             } else {
-                userInputs.add(userInput);
+                taskManager.addTask(new Task(userInput));
                 System.out.print(Message.getAddedMessage(userInput));
             }
         }

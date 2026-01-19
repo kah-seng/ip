@@ -11,6 +11,16 @@ public class Message {
                 """, Message.DIVIDER, toAdd, Message.DIVIDER);
     }
 
+    public static String getListMessage(TaskManager taskManager) {
+        return String.format("""
+                
+                %s
+                %s
+                %s
+                
+                """, Message.DIVIDER, taskManager, Message.DIVIDER);
+    }
+
     public static String getWelcomeMessage() {
         return String.format("""
                 %s
