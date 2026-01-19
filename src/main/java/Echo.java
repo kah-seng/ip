@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Echo {
@@ -30,9 +30,36 @@ public class Echo {
                 } else {
                     System.out.print(Message.getInvalidTaskNumberMessage(taskManager));
                 }
-            } else {
-                taskManager.addTask(new Task(userInput));
-                System.out.print(Message.getAddedMessage(userInput));
+            } else if (splitUserInput[0].equals("deadline")) {
+                int byIndex = -1;
+                for (int i = 0; i < splitUserInput.length; i++) {
+                    if (splitUserInput[i].equals("/by")) {
+                        byIndex = i;
+                        break;
+                    }
+                }
+
+                if (byIndex < 0) {
+                    // TODO
+                } else {
+                    StringBuilder deadlineNameBuilder = new StringBuilder();
+                    for (int i = 1; i < byIndex; i++) {
+                        deadlineNameBuilder.append(splitUserInput[i]).append(" ");
+                    }
+                    // Remove trailing space
+                    deadlineNameBuilder.deleteCharAt(deadlineNameBuilder.length() - 1);
+
+                    StringBuilder deadlineByBuilder = new StringBuilder();
+                    for (int i = byIndex + 1; i < splitUserInput.length; i++) {
+                        deadlineByBuilder.append(splitUserInput[i]).append(" ");
+                    }
+                    // Remove trailing space
+                    deadlineByBuilder.deleteCharAt(deadlineByBuilder.length() - 1);
+
+                    Deadline deadline = new Deadline(deadlineNameBuilder.toString(), deadlineByBuilder.toString());
+                    taskManager.addTask(deadline);
+                    System.out.print(Message.getAddedMessage(deadline.toString()));
+                }
             }
         }
 
