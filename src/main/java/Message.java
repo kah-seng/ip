@@ -2,41 +2,40 @@ public class Message {
     public static final String DIVIDER = "------------------------------------------------------------";
 
     public static String getAddedMessage(String toAdd) {
-        return String.format("""
-                
-                %s
-                Added: %s
-                %s
-                
-                """, Message.DIVIDER, toAdd, Message.DIVIDER);
+        return Message.wrapInDividers("ADDED: " + toAdd);
     }
 
     public static String getListMessage(TaskManager taskManager) {
-        return String.format("""
-                
-                %s
-                %s
-                %s
-                
-                """, Message.DIVIDER, taskManager, Message.DIVIDER);
+        return Message.wrapInDividers(taskManager.toString());
+    }
+
+    public static String getInvalidTaskNumberMessage(TaskManager taskManager) {
+        return Message.wrapInDividers("ERROR: Task number should be from 1 to " + taskManager.getSize());
+    }
+
+    public static String getTaskMarkedMessage(Task task) {
+        return Message.wrapInDividers("MARKED: " + task);
+    }
+
+    public static String getTaskUnmarkedMessage(Task task) {
+        return Message.wrapInDividers("UNMARKED: " + task);
     }
 
     public static String getWelcomeMessage() {
-        return String.format("""
-                %s
-                Hello! I'm Echo.
-                What can I do for you?
-                %s
-                
-                """, Message.DIVIDER, Message.DIVIDER);
+        return Message.wrapInDividers("Hello! I'm Echo.\nWhat can I do for you?");
     }
 
     public static String getByeMessage() {
+        return Message.wrapInDividers("Bye. Hope to see you again soon!");
+    }
+
+    public static String wrapInDividers(String msg) {
         return String.format("""
                 
                 %s
-                Bye. Hope to see you again soon!
                 %s
-                """, Message.DIVIDER, Message.DIVIDER);
+                %s
+                
+                """, Message.DIVIDER, msg, Message.DIVIDER);
     }
 }

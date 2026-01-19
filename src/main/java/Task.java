@@ -7,8 +7,16 @@ public class Task {
         this.name = name;
     }
 
+    public void setIsDone(boolean isDone) {
+        this.isDone = isDone;
+    }
+
+    public boolean getIsDone() {
+        return this.isDone;
+    }
+
     @Override
     public String toString() {
-        return this.name;
+        return String.format("[%c] %s", this.isDone ? 'X' : ' ', this.name);
     }
 }
