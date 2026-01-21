@@ -12,27 +12,45 @@ public class TaskManager {
         Message.taskAdded(task.toString());
     }
 
-    public void deleteTask(int taskNumber) {
+    public void deleteTask(String taskNumberString) throws InvalidTaskNumberException {
+        int taskNumber = this.parseTaskNumber(taskNumberString);
+
+        if (taskNumber < 0) {
+            throw new InvalidTaskNumberException();
+        }
+
         Message.taskDeleted(this.tasks.get(taskNumber - 1).toString());
         this.tasks.remove(taskNumber - 1);
     }
 
-    public void markTask(int taskNumber) {
+    public void markTask(String taskNumberString) throws InvalidTaskNumberException {
+        int taskNumber = this.parseTaskNumber(taskNumberString);
+
+        if (taskNumber < 0) {
+            throw new InvalidTaskNumberException();
+        }
+
         this.tasks.get(taskNumber - 1).setIsDone(true);
         Message.taskMarked(this.tasks.get(taskNumber - 1).toString());
     }
 
-    public void unmarkTask(int taskNumber) {
+    public void unmarkTask(String taskNumberString) throws InvalidTaskNumberException {
+        int taskNumber = this.parseTaskNumber(taskNumberString);
+
+        if (taskNumber < 0) {
+            throw new InvalidTaskNumberException();
+        }
+
         this.tasks.get(taskNumber - 1).setIsDone(false);
         Message.taskUnmarked(this.tasks.get(taskNumber - 1).toString());
     }
 
-    public boolean checkTaskNumber(String taskNumber) {
+    public int parseTaskNumber(String taskNumber) {
         try {
             int taskNumberInt = Integer.parseInt(taskNumber);
-            return taskNumberInt >= 1 && taskNumberInt <= this.tasks.size();
+            return taskNumberInt >= 1 && taskNumberInt <= this.tasks.size() ? taskNumberInt : -1;
         } catch (NumberFormatException e) {
-            return false;
+            return -1;
         }
     }
 

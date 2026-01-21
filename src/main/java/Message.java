@@ -1,6 +1,4 @@
 public class Message {
-    public static final String DIVIDER = "------------------------------------------------------------";
-
     public static void taskAdded(String toAdd) {
         System.out.print(Message.wrapInDividers("ADDED: " + toAdd));
     }
@@ -14,7 +12,14 @@ public class Message {
     }
 
     public static void invalidTaskNumber(TaskManager taskManager) {
-        System.out.print(Message.wrapInDividers("ERROR: Task number should be from 1 to " + taskManager.getSize()));
+        if (taskManager.getSize() > 1) {
+            System.out.print(Message.wrapInDividers(
+                    "ERROR: Task number should be from 1 to " + taskManager.getSize()));
+        } else if (taskManager.getSize() == 1) {
+            System.out.print(Message.wrapInDividers("ERROR: Task number can only be 1"));
+        } else {
+            System.out.print(Message.wrapInDividers("ERROR: No tasks added yet"));
+        }
     }
 
     public static void taskMarked(String taskString) {
@@ -33,13 +38,33 @@ public class Message {
         System.out.print(Message.wrapInDividers("Bye. Hope to see you again soon!"));
     }
 
+    public static void invalidCommand() {
+        System.out.print(Message.wrapInDividers("ERROR: Command not recognized, please try again"));
+    }
+
+    public static void invalidArguments(String command) {
+        if (command.equals("mark")) {
+            System.out.print(Message.wrapInDividers(
+                    "ERROR: Invalid/Missing argument\nUSAGE: mark [task number]"));
+        } else if (command.equals("unmark")) {
+            System.out.print(Message.wrapInDividers(
+                    "ERROR: Invalid/Missing argument\nUSAGE: unmark [task number]"));
+        } else if (command.equals("delete")) {
+            System.out.print(Message.wrapInDividers(
+                    "ERROR: Invalid/Missing argument\nUSAGE: delete [task number]"));
+        } else if (command.equals("todo")) {
+            System.out.print(Message.wrapInDividers(
+                    "ERROR: Invalid/Missing argument\nUSAGE: todo [name/description of task]"));
+        }
+    }
+
     private static String wrapInDividers(String msg) {
         return String.format("""
                 
+                ------------------------------------------------------------
                 %s
-                %s
-                %s
+                ------------------------------------------------------------
                 
-                """, Message.DIVIDER, msg, Message.DIVIDER);
+                """, msg);
     }
 }
