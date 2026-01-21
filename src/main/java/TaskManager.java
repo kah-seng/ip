@@ -9,22 +9,22 @@ public class TaskManager {
 
     public void addTask(Task task) {
         this.tasks.add(task);
+        Message.taskAdded(task.toString());
     }
 
-    public void removeTask(int taskNumber) {
+    public void deleteTask(int taskNumber) {
+        Message.taskDeleted(this.tasks.get(taskNumber - 1).toString());
         this.tasks.remove(taskNumber - 1);
-    }
-
-    public Task getTask(int taskNumber) {
-        return this.tasks.get(taskNumber - 1);
     }
 
     public void markTask(int taskNumber) {
         this.tasks.get(taskNumber - 1).setIsDone(true);
+        Message.taskMarked(this.tasks.get(taskNumber - 1).toString());
     }
 
     public void unmarkTask(int taskNumber) {
         this.tasks.get(taskNumber - 1).setIsDone(false);
+        Message.taskUnmarked(this.tasks.get(taskNumber - 1).toString());
     }
 
     public boolean checkTaskNumber(String taskNumber) {
@@ -34,6 +34,10 @@ public class TaskManager {
         } catch (NumberFormatException e) {
             return false;
         }
+    }
+
+    public void list() {
+        Message.list(this);
     }
 
     public int getSize() {
