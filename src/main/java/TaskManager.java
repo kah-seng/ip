@@ -11,6 +11,10 @@ public class TaskManager {
         this.tasks.add(task);
     }
 
+    public void removeTask(int taskNumber) {
+        this.tasks.remove(taskNumber - 1);
+    }
+
     public Task getTask(int taskNumber) {
         return this.tasks.get(taskNumber - 1);
     }

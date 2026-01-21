@@ -5,6 +5,10 @@ public class Message {
         return Message.wrapInDividers("ADDED: " + toAdd);
     }
 
+    public static String getRemovedMessage(String toRemove) {
+        return Message.wrapInDividers("REMOVED: " + toRemove);
+    }
+
     public static String getListMessage(TaskManager taskManager) {
         return Message.wrapInDividers(taskManager.toString());
     }

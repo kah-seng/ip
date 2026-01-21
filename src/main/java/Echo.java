@@ -9,14 +9,13 @@ public class Echo {
         TaskManager taskManager = new TaskManager();
         while (true) {
             String userInput = scanner.nextLine();
-            String[] splitUserInput = userInput.split(" ");
 
-            if (splitUserInput.length == 1 && userInput.equals("bye")) {
+            if (userInput.equals("bye")) {
                 break;
-            } else if (splitUserInput.length == 1 && userInput.equals("list")) {
+            } else if (userInput.equals("list")) {
                 System.out.print(Message.getListMessage(taskManager));
-            } else if (splitUserInput.length == 2
-                    && (splitUserInput[0].equals("mark") || splitUserInput[0].equals("unmark"))) {
+            } else if (userInput.startsWith("mark ") || userInput.startsWith("unmark ")) {
+                String[] splitUserInput = userInput.split(" ");
                 String taskNumber = splitUserInput[1];
                 if (taskManager.checkTaskNumber(taskNumber)) {
                     int taskNumberInt = Integer.parseInt(taskNumber);
@@ -67,6 +66,16 @@ public class Echo {
                 ToDo toDo = new ToDo(userInput.substring(5));
                 taskManager.addTask(toDo);
                 System.out.print(Message.getAddedMessage(toDo.toString()));
+            } else if (userInput.startsWith("delete ")) {
+                String[] splitUserInput = userInput.split(" ");
+                String taskNumber = splitUserInput[1];
+                if (taskManager.checkTaskNumber(taskNumber)) {
+                    int taskNumberInt = Integer.parseInt(taskNumber);
+                    System.out.print(Message.getRemovedMessage(taskManager.getTask(taskNumberInt).toString()));
+                    taskManager.removeTask(taskNumberInt);
+                } else {
+                    System.out.print(Message.getInvalidTaskNumberMessage(taskManager));
+                }
             }
         }
 
