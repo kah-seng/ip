@@ -30,74 +30,43 @@ public class Echo {
                 } else {
                     System.out.print(Message.getInvalidTaskNumberMessage(taskManager));
                 }
-            } else if (splitUserInput[0].equals("deadline")) {
-                int byIndex = -1;
-                for (int i = 0; i < splitUserInput.length; i++) {
-                    if (splitUserInput[i].equals("/by")) {
-                        byIndex = i;
-                        break;
-                    }
-                }
+            } else if (userInput.startsWith("deadline ")) {
+                int byIndex = userInput.indexOf(" /by ");
 
                 if (byIndex < 0) {
                     // TODO
                 } else {
-                    StringBuilder deadlineNameBuilder = new StringBuilder();
-                    for (int i = 1; i < byIndex; i++) {
-                        deadlineNameBuilder.append(splitUserInput[i]).append(" ");
-                    }
-                    deadlineNameBuilder.deleteCharAt(deadlineNameBuilder.length() - 1);
+                    // Start from index 9 to remove "deadline "
+                    String name = userInput.substring(9, byIndex);
+                    // +5 to remove " /by "
+                    String by = userInput.substring(byIndex + 5);
 
-                    StringBuilder deadlineByBuilder = new StringBuilder();
-                    for (int i = byIndex + 1; i < splitUserInput.length; i++) {
-                        deadlineByBuilder.append(splitUserInput[i]).append(" ");
-                    }
-                    deadlineByBuilder.deleteCharAt(deadlineByBuilder.length() - 1);
-
-                    Deadline deadline = new Deadline(deadlineNameBuilder.toString(), deadlineByBuilder.toString());
+                    Deadline deadline = new Deadline(name, by);
                     taskManager.addTask(deadline);
                     System.out.print(Message.getAddedMessage(deadline.toString()));
                 }
-            } else if (splitUserInput[0].equals("event")) {
-                int fromIndex = -1;
-                int toIndex = -1;
-                for (int i = 0; i < splitUserInput.length; i++) {
-                    if (splitUserInput[i].equals("/from")) {
-                        fromIndex = i;
-                    } else if (splitUserInput[i].equals("/to")) {
-                        toIndex = i;
-                    }
-                    if (fromIndex > 0 && toIndex > 0) {
-                        break;
-                    }
-                }
+            } else if (userInput.startsWith("event ")) {
+                int fromIndex = userInput.indexOf(" /from ");
+                int toIndex = userInput.indexOf(" /to ");
 
                 if (fromIndex < 0 || toIndex < 0) {
                     // TODO
                 } else {
-                    StringBuilder eventNameBuilder = new StringBuilder();
-                    for (int i = 1; i < fromIndex; i++) {
-                        eventNameBuilder.append(splitUserInput[i]).append(" ");
-                    }
-                    eventNameBuilder.deleteCharAt(eventNameBuilder.length() - 1);
+                    // Start from index 6 to remove "event "
+                    String name = userInput.substring(6, fromIndex);
+                    // +7 to remove " /from "
+                    String from = userInput.substring(fromIndex + 7, toIndex);
+                    // +5 to remove " /to "
+                    String to = userInput.substring(toIndex + 5);
 
-                    StringBuilder eventFromBuilder = new StringBuilder();
-                    for (int i = fromIndex + 1; i < toIndex; i++) {
-                        eventFromBuilder.append(splitUserInput[i]).append(" ");
-                    }
-                    eventFromBuilder.deleteCharAt(eventFromBuilder.length() - 1);
-
-                    StringBuilder eventToBuilder = new StringBuilder();
-                    for (int i = toIndex + 1; i < splitUserInput.length; i++) {
-                        eventToBuilder.append(splitUserInput[i]).append(" ");
-                    }
-                    eventToBuilder.deleteCharAt(eventToBuilder.length() - 1);
-
-                    Event event = new Event(eventNameBuilder.toString(),
-                            eventFromBuilder.toString(), eventToBuilder.toString());
+                    Event event = new Event(name, from, to);
                     taskManager.addTask(event);
                     System.out.print(Message.getAddedMessage(event.toString()));
                 }
+            } else if (userInput.startsWith("todo ")) {
+                ToDo toDo = new ToDo(userInput.substring(5));
+                taskManager.addTask(toDo);
+                System.out.print(Message.getAddedMessage(toDo.toString()));
             }
         }
 
