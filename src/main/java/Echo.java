@@ -1,3 +1,8 @@
+import EchoExceptions.InvalidTaskNumberException;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Scanner;
 
 public class Echo {
@@ -9,8 +14,9 @@ public class Echo {
 
         while (true) {
             String userInput = scanner.nextLine();
-            String[] splitUserInput = userInput.split(" ");
-            String command = splitUserInput.length > 0 ? splitUserInput[0] : "";
+            ArrayList<String> splitUserInput = new ArrayList<>(Arrays.asList(userInput.split(" ")));
+            splitUserInput.removeAll(Collections.singleton(""));
+            String command = splitUserInput.isEmpty() ? "" : splitUserInput.get(0);
 
             if (userInput.equals("bye")) {
                 break;
@@ -19,9 +25,9 @@ public class Echo {
             } else if (command.equals("mark") || command.equals("unmark")) {
                 markUnmarkHandler(command, splitUserInput, taskManager);
             } else if (command.equals("deadline")) {
-                deadlineHandler(userInput, taskManager);
+                deadlineHandler(splitUserInput, userInput, taskManager);
             } else if (command.equals("event")) {
-                eventHandler(userInput, taskManager);
+                eventHandler(splitUserInput, userInput, taskManager);
             } else if (command.equals("todo")) {
                 toDoHandler(splitUserInput, userInput, taskManager);
             } else if (command.equals("delete")) {
@@ -34,28 +40,28 @@ public class Echo {
         Message.bye();
     }
 
-    private static void markUnmarkHandler(String command, String[] splitUserInput, TaskManager taskManager) {
-        if (splitUserInput.length != 2) {
+    private static void markUnmarkHandler(String command, ArrayList<String> splitUserInput, TaskManager taskManager) {
+        if (splitUserInput.size() != 2) {
             Message.invalidArguments(command);
             return;
         }
 
         try {
             if (command.equals("mark")) {
-                taskManager.markTask(splitUserInput[1]);
+                taskManager.markTask(splitUserInput.get(1));
             } else {
-                taskManager.unmarkTask(splitUserInput[1]);
+                taskManager.unmarkTask(splitUserInput.get(1));
             }
         } catch (InvalidTaskNumberException e) {
             Message.invalidTaskNumber(taskManager);
         }
     }
 
-    private static void deadlineHandler(String userInput, TaskManager taskManager) {
+    private static void deadlineHandler(ArrayList<String> splitUserInput, String userInput, TaskManager taskManager) {
         int byIndex = userInput.indexOf(" /by ");
 
-        if (byIndex < 0) {
-            // TODO
+        if (splitUserInput.size() < 4 || byIndex < 0) {
+            Message.invalidArguments("deadline");
         } else {
             // Start from index 9 to remove "deadline "
             String name = userInput.substring(9, byIndex);
@@ -67,12 +73,12 @@ public class Echo {
         }
     }
 
-    private static void eventHandler(String userInput, TaskManager taskManager) {
+    private static void eventHandler(ArrayList<String> splitUserInput, String userInput, TaskManager taskManager) {
         int fromIndex = userInput.indexOf(" /from ");
         int toIndex = userInput.indexOf(" /to ");
 
-        if (fromIndex < 0 || toIndex < 0) {
-            // TODO
+        if (splitUserInput.size() < 6 || fromIndex < 0 || toIndex < 0 || toIndex < fromIndex) {
+            Message.invalidArguments("event");
         } else {
             // Start from index 6 to remove "event "
             String name = userInput.substring(6, fromIndex);
@@ -86,8 +92,8 @@ public class Echo {
         }
     }
 
-    private static void toDoHandler(String[] splitUserInput, String userInput, TaskManager taskManager) {
-        if (splitUserInput.length < 2) {
+    private static void toDoHandler(ArrayList<String> splitUserInput, String userInput, TaskManager taskManager) {
+        if (splitUserInput.size() < 2) {
             Message.invalidArguments("todo");
         } else {
             ToDo toDo = new ToDo(userInput.substring(5));
@@ -95,14 +101,14 @@ public class Echo {
         }
     }
 
-    private static void deleteHandler(String[] splitUserInput, TaskManager taskManager) {
-        if (splitUserInput.length != 2) {
+    private static void deleteHandler(ArrayList<String> splitUserInput, TaskManager taskManager) {
+        if (splitUserInput.size() != 2) {
             Message.invalidArguments("delete");
             return;
         }
 
         try {
-            taskManager.deleteTask(splitUserInput[1]);
+            taskManager.deleteTask(splitUserInput.get(1));
         } catch (InvalidTaskNumberException e) {
             Message.invalidTaskNumber(taskManager);
         }

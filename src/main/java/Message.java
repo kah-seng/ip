@@ -54,7 +54,14 @@ public class Message {
                     "ERROR: Invalid/Missing argument\nUSAGE: delete [task number]"));
         } else if (command.equals("todo")) {
             System.out.print(Message.wrapInDividers(
-                    "ERROR: Invalid/Missing argument\nUSAGE: todo [name/description of task]"));
+                    "ERROR: Invalid/Missing argument\nUSAGE: todo [name/description of todo]"));
+        } else if (command.equals("event")) {
+            System.out.print(Message.wrapInDividers(
+                    "ERROR: Invalid/Missing argument(s)\nUSAGE: event [name/description of event] /from [date/time] " +
+                            "/to [date/time]"));
+        } else if (command.equals("deadline")) {
+            System.out.print(Message.wrapInDividers(
+                    "ERROR: Invalid/Missing argument\nUSAGE: deadline [name/description of deadline] /by [date/time]"));
         }
     }
 
