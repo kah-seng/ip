@@ -1,4 +1,4 @@
-import EchoExceptions.InvalidTaskNumberException;
+import echo.exception.InvalidTaskNumberException;
 
 import java.util.ArrayList;
 
