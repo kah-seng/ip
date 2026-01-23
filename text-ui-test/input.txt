@@ -1,0 +1,20 @@
+list
+mark 1
+unmark 1
+deadline Homework 1 /by Monday 2pm
+event Meeting 1 /from Tuesday 5pm /to 7pm
+todo Task 1
+list
+mark 0
+mark 4
+unmark 0
+unmark 4
+delete 0
+delete 4
+mark 1
+mark 2
+delete 2
+list
+unmark 1
+list
+bye
