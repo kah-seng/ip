@@ -3,6 +3,8 @@ import echo.exception.InvalidTaskNumberException;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -81,13 +83,16 @@ public class Echo {
         if (splitUserInput.size() < 4 || byIndex < 0) {
             Message.invalidArguments("deadline");
         } else {
-            // Start from index 9 to remove "deadline "
-            String name = userInput.substring(9, byIndex);
-            // +5 to remove " /by "
-            String by = userInput.substring(byIndex + 5);
-
-            Deadline deadline = new Deadline(name, by);
-            taskManager.addTask(deadline, this.storage);
+            try {
+                // Start from index 9 to remove "deadline "
+                String name = userInput.substring(9, byIndex);
+                // +5 to remove " /by "
+                LocalDate by = LocalDate.parse(userInput.substring(byIndex + 5));
+                Deadline deadline = new Deadline(name, by);
+                taskManager.addTask(deadline, this.storage);
+            } catch (DateTimeParseException e) {
+                Message.invalidArguments("deadline");
+            }
         }
     }
 
@@ -98,15 +103,18 @@ public class Echo {
         if (splitUserInput.size() < 6 || fromIndex < 0 || toIndex < 0 || toIndex < fromIndex) {
             Message.invalidArguments("event");
         } else {
-            // Start from index 6 to remove "event "
-            String name = userInput.substring(6, fromIndex);
-            // +7 to remove " /from "
-            String from = userInput.substring(fromIndex + 7, toIndex);
-            // +5 to remove " /to "
-            String to = userInput.substring(toIndex + 5);
-
-            Event event = new Event(name, from, to);
-            taskManager.addTask(event, this.storage);
+            try {
+                // Start from index 6 to remove "event "
+                String name = userInput.substring(6, fromIndex);
+                // +7 to remove " /from "
+                LocalDate from = LocalDate.parse(userInput.substring(fromIndex + 7, toIndex));
+                // +5 to remove " /to "
+                LocalDate to = LocalDate.parse(userInput.substring(toIndex + 5));
+                Event event = new Event(name, from, to);
+                taskManager.addTask(event, this.storage);
+            } catch (DateTimeParseException e) {
+                Message.invalidArguments("event");
+            }
         }
     }
 
