@@ -1,5 +1,6 @@
 import echo.exception.InvalidTaskNumberException;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class TaskManager {
@@ -9,12 +10,22 @@ public class TaskManager {
         this.tasks = new ArrayList<>();
     }
 
-    public void addTask(Task task) {
-        this.tasks.add(task);
-        Message.taskAdded(task.toString());
+    public TaskManager(ArrayList<Task> tasks) {
+        this.tasks = tasks;
     }
 
-    public void deleteTask(String taskNumberString) throws InvalidTaskNumberException {
+    public void addTask(Task task, Storage storage) {
+        this.tasks.add(task);
+        Message.taskAdded(task.toString());
+
+        try {
+            storage.saveToFile(this.tasks);
+        } catch (IOException e) {
+            Message.fileError();
+        }
+    }
+
+    public void deleteTask(String taskNumberString, Storage storage) throws InvalidTaskNumberException {
         int taskNumber = this.parseTaskNumber(taskNumberString);
 
         if (taskNumber < 0) {
@@ -23,9 +34,15 @@ public class TaskManager {
 
         Message.taskDeleted(this.tasks.get(taskNumber - 1).toString());
         this.tasks.remove(taskNumber - 1);
+
+        try {
+            storage.saveToFile(this.tasks);
+        } catch (IOException e) {
+            Message.fileError();
+        }
     }
 
-    public void markTask(String taskNumberString) throws InvalidTaskNumberException {
+    public void markTask(String taskNumberString, Storage storage) throws InvalidTaskNumberException {
         int taskNumber = this.parseTaskNumber(taskNumberString);
 
         if (taskNumber < 0) {
@@ -34,9 +51,15 @@ public class TaskManager {
 
         this.tasks.get(taskNumber - 1).setIsDone(true);
         Message.taskMarked(this.tasks.get(taskNumber - 1).toString());
+
+        try {
+            storage.saveToFile(this.tasks);
+        } catch (IOException e) {
+            Message.fileError();
+        }
     }
 
-    public void unmarkTask(String taskNumberString) throws InvalidTaskNumberException {
+    public void unmarkTask(String taskNumberString, Storage storage) throws InvalidTaskNumberException {
         int taskNumber = this.parseTaskNumber(taskNumberString);
 
         if (taskNumber < 0) {
@@ -45,6 +68,12 @@ public class TaskManager {
 
         this.tasks.get(taskNumber - 1).setIsDone(false);
         Message.taskUnmarked(this.tasks.get(taskNumber - 1).toString());
+
+        try {
+            storage.saveToFile(this.tasks);
+        } catch (IOException e) {
+            Message.fileError();
+        }
     }
 
     public int parseTaskNumber(String taskNumber) {

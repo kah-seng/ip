@@ -1,4 +1,12 @@
 public class Message {
+    public static void fileFound() {
+        System.out.print(Message.wrapInDividers("Saved file found"));
+    }
+
+    public static void fileError() {
+        System.out.print(Message.wrapInDividers("ERROR: Could not access ./data/Echo.txt"));
+    }
+
     public static void taskAdded(String toAdd) {
         System.out.print(Message.wrapInDividers("ADDED: " + toAdd));
     }
