@@ -1,4 +1,8 @@
 public class Message {
+    public static void lineError(String line) {
+        System.out.println(Message.wrapInDividers("ERROR: Could not parse line \"" + line + "\""));
+    }
+
     public static void fileFound() {
         System.out.print(Message.wrapInDividers("Saved file found"));
     }
