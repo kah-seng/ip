@@ -67,16 +67,20 @@ public class Storage {
             taskName = line.substring(isDoneIndex + 4, dateTimeIndex - 1);
 
             if (taskType == 'E') {
-                int fromIndex = line.indexOf("from: ");
-                int toIndex = line.indexOf("to: ");
-                String from = line.substring(fromIndex + 6, toIndex - 2);
-                String to = line.substring(toIndex + 4, line.length() - 1);
-                Task task = new Event(taskName, from, to);
-                task.setIsDone(isDone);
-                tasks.add(task);
-            } else {
-                int byIndex = line.indexOf("by: ");
                 try {
+                    int fromIndex = line.indexOf("from: ");
+                    int toIndex = line.indexOf("to: ");
+                    LocalDate from = LocalDate.parse(line.substring(fromIndex + 6, toIndex - 2));
+                    LocalDate to = LocalDate.parse(line.substring(toIndex + 4, line.length() - 1));
+                    Task task = new Event(taskName, from, to);
+                    task.setIsDone(isDone);
+                    tasks.add(task);
+                } catch (DateTimeParseException e) {
+                    continue;
+                }
+            } else {
+                try {
+                    int byIndex = line.indexOf("by: ");
                     LocalDate by = LocalDate.parse(line.substring(byIndex + 4, line.length() - 1));
                     Task task = new Deadline(taskName, by);
                     task.setIsDone(isDone);
