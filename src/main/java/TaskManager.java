@@ -98,7 +98,7 @@ public class TaskManager {
         StringBuilder sb = new StringBuilder("Here are the tasks in your list:");
         for (int i = 0; i < this.tasks.size(); i++) {
             Task task = this.tasks.get(i);
-            sb.append(String.format("\n%d. %s", i + 1, task));
+            sb.append(String.format("\n%d. %s", i + 1, task.toString()));
         }
         return sb.toString();
     }

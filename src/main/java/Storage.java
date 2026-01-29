@@ -3,6 +3,8 @@ import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -74,10 +76,14 @@ public class Storage {
                 tasks.add(task);
             } else {
                 int byIndex = line.indexOf("by: ");
-                String by = line.substring(byIndex + 4, line.length() - 1);
-                Task task = new Deadline(taskName, by);
-                task.setIsDone(isDone);
-                tasks.add(task);
+                try {
+                    LocalDate by = LocalDate.parse(line.substring(byIndex + 4, line.length() - 1));
+                    Task task = new Deadline(taskName, by);
+                    task.setIsDone(isDone);
+                    tasks.add(task);
+                } catch (DateTimeParseException e) {
+                    continue;
+                }
             }
         }
 
@@ -88,7 +94,7 @@ public class Storage {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < tasks.size(); i++) {
             Task task = tasks.get(i);
-            sb.append(String.format("%d. %s\n", i + 1, task));
+            sb.append(String.format("%d. %s\n", i + 1, task.toSaveString()));
         }
         Files.writeString(path, sb.toString(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING,
                 StandardOpenOption.WRITE);

@@ -11,6 +11,10 @@ public abstract class Task {
         this.isDone = isDone;
     }
 
+    public String toSaveString() {
+        return this.toString();
+    }
+
     @Override
     public String toString() {
         return String.format("[%c] %s", this.isDone ? 'X' : ' ', this.name);

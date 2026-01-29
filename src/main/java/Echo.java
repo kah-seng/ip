@@ -3,6 +3,8 @@ import echo.exception.InvalidTaskNumberException;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -84,10 +86,13 @@ public class Echo {
             // Start from index 9 to remove "deadline "
             String name = userInput.substring(9, byIndex);
             // +5 to remove " /by "
-            String by = userInput.substring(byIndex + 5);
-
-            Deadline deadline = new Deadline(name, by);
-            taskManager.addTask(deadline, this.storage);
+            try {
+                LocalDate by = LocalDate.parse(userInput.substring(byIndex + 5));
+                Deadline deadline = new Deadline(name, by);
+                taskManager.addTask(deadline, this.storage);
+            } catch (DateTimeParseException e) {
+                Message.invalidArguments("deadline");
+            }
         }
     }
 
