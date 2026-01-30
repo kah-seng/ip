@@ -5,6 +5,9 @@ public class ToDo extends Task {
         super(name);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toString() {
         return String.format("[T]%s", super.toString());

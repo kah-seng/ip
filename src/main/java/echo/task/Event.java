@@ -13,6 +13,9 @@ public class Event extends Task {
         this.to = to;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toSaveString() {
         return String.format("[E]%s (from: %s, to: %s)", super.toString(),
@@ -20,6 +23,9 @@ public class Event extends Task {
                 this.to.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toString() {
         return String.format("[E]%s (from: %s, to: %s)", super.toString(),

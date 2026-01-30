@@ -11,12 +11,18 @@ public class Deadline extends Task {
         this.by = by;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toSaveString() {
         return String.format("[D]%s (by: %s)", super.toString(),
                 this.by.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toString() {
         return String.format("[D]%s (by: %s)", super.toString(),

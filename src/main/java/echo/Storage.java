@@ -27,6 +27,11 @@ public class Storage {
         }
     }
 
+    /**
+     * Returns a TaskManager instance from the text file in the specified path.
+     * @return TaskManager instance.
+     * @throws IOException If attempting to access the text file was not successful.
+     */
     public TaskManager createTaskManager() throws IOException {
         Scanner scanner = new Scanner(this.path);
         ArrayList<Task> tasks = new ArrayList<>();
@@ -104,6 +109,11 @@ public class Storage {
         return new TaskManager(tasks);
     }
 
+    /**
+     * Writes the current list of tasks to the text file at the specified path.
+     * @param tasks List of current tasks.
+     * @throws IOException If attempting to access the text file was not successful.
+     */
     public void saveToFile(ArrayList<Task> tasks) throws IOException {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < tasks.size(); i++) {

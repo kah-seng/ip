@@ -22,6 +22,9 @@ public class DeadlineCommand extends Command {
         this.storage = storage;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void execute() {
         int byIndex = this.userInput.indexOf(" /by ");
