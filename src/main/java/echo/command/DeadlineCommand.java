@@ -15,7 +15,8 @@ public class DeadlineCommand extends Command {
     private TaskManager taskManager;
     private Storage storage;
 
-    public DeadlineCommand(ArrayList<String> splitUserInput, String userInput, TaskManager taskManager, Storage storage) {
+    public DeadlineCommand(ArrayList<String> splitUserInput, String userInput, TaskManager taskManager,
+                           Storage storage) {
         this.splitUserInput = splitUserInput;
         this.userInput = userInput;
         this.taskManager = taskManager;
