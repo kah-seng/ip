@@ -28,7 +28,7 @@ public class EventCommand extends Command {
         int toIndex = this.userInput.indexOf(" /to ");
 
         if (this.splitUserInput.size() < 6 || fromIndex < 0 || toIndex < 0 || toIndex < fromIndex) {
-            Ui.showInvalidArgumentsError("event");
+            Ui.showInvalidArgumentsWarning("event");
         } else {
             try {
                 // Start from index 6 to remove "event "
@@ -40,7 +40,7 @@ public class EventCommand extends Command {
                 Event event = new Event(name, from, to);
                 this.taskManager.addTask(event, this.storage);
             } catch (DateTimeParseException e) {
-                Ui.showInvalidArgumentsError("event");
+                Ui.showInvalidArgumentsWarning("event");
             }
         }
     }

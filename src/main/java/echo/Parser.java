@@ -1,6 +1,7 @@
 package echo;
 
 import echo.command.*;
+import echo.exception.InvalidCommandException;
 import echo.task.TaskManager;
 
 import java.util.ArrayList;
@@ -8,7 +9,8 @@ import java.util.Arrays;
 import java.util.Collections;
 
 public class Parser {
-    public static Command parse(String userInput, TaskManager taskManager, Storage storage) {
+    public static Command parse(String userInput, TaskManager taskManager, Storage storage)
+            throws InvalidCommandException {
         ArrayList<String> splitUserInput = new ArrayList<>(Arrays.asList(userInput.split(" ")));
         splitUserInput.removeAll(Collections.singleton(""));
         String commandString = splitUserInput.isEmpty() ? "" : splitUserInput.get(0);
@@ -30,7 +32,7 @@ public class Parser {
         } else if (commandString.equals("delete")) {
             return new DeleteCommand(splitUserInput, taskManager, storage);
         } else {
-            return new InvalidCommand();
+            throw new InvalidCommandException();
         }
     }
 }

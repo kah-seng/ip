@@ -21,14 +21,14 @@ public class MarkCommand extends Command {
     @Override
     public void execute() {
         if (this.splitUserInput.size() != 2) {
-            Ui.showInvalidArgumentsError("mark");
+            Ui.showInvalidArgumentsWarning("mark");
             return;
         }
 
         try {
             this.taskManager.markTask(this.splitUserInput.get(1), this.storage);
         } catch (InvalidTaskNumberException e) {
-            Ui.showInvalidTaskNumberError(this.taskManager);
+            Ui.showInvalidTaskNumberWarning(this.taskManager);
         }
     }
 }

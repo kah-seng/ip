@@ -21,9 +21,9 @@ public class Storage {
             Files.createDirectories(path.getParent());
             Files.createFile(path);
         } catch (FileAlreadyExistsException e) {
-            Ui.showFileFound();
+
         } catch (IOException e) {
-            Ui.showFileError();
+            Ui.showFileWarning();
         }
     }
 
@@ -41,19 +41,19 @@ public class Storage {
             if (taskTypeIndex == -1 || taskTypeIndex >= line.length() - 3 || line.charAt(taskTypeIndex + 2) != ']'
                     || isDoneIndex == -1 || isDoneIndex >= line.length() - 3 || line.charAt(isDoneIndex + 2) != ']') {
                 // Task type or marked flag format is invalid
-                Ui.showLineError(line);
+                Ui.showLineWarning(line);
                 continue;
             } else {
                 // Parse task type
                 taskType = line.charAt(taskTypeIndex + 1);
                 if (taskType != 'T' && taskType != 'E' && taskType != 'D') {
-                    Ui.showLineError(line);
+                    Ui.showLineWarning(line);
                     continue;
                 }
 
                 // Parse marked flag
                 if (line.charAt(isDoneIndex + 1) != ' ' && line.charAt(isDoneIndex + 1) != 'X') {
-                    Ui.showLineError(line);
+                    Ui.showLineWarning(line);
                     continue;
                 }
                 isDone = line.charAt(isDoneIndex + 1) == 'X';
@@ -69,7 +69,7 @@ public class Storage {
             String taskName;
             int dateTimeIndex = line.indexOf('(');
             if (dateTimeIndex == -1 || line.substring(isDoneIndex + 1, dateTimeIndex - 1).length() <= 0) {
-                Ui.showLineError(line);
+                Ui.showLineWarning(line);
                 continue;
             }
             taskName = line.substring(isDoneIndex + 4, dateTimeIndex - 1);
@@ -84,7 +84,7 @@ public class Storage {
                     task.setIsDone(isDone);
                     tasks.add(task);
                 } catch (DateTimeParseException e) {
-                    Ui.showLineError(line);
+                    Ui.showLineWarning(line);
                     continue;
                 }
             } else {
@@ -95,7 +95,7 @@ public class Storage {
                     task.setIsDone(isDone);
                     tasks.add(task);
                 } catch (DateTimeParseException e) {
-                    Ui.showLineError(line);
+                    Ui.showLineWarning(line);
                     continue;
                 }
             }

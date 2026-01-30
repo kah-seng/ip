@@ -25,7 +25,7 @@ public class TaskManager {
         try {
             storage.saveToFile(this.tasks);
         } catch (IOException e) {
-            Ui.showFileError();
+            Ui.showFileWarning();
         }
     }
 
@@ -42,7 +42,7 @@ public class TaskManager {
         try {
             storage.saveToFile(this.tasks);
         } catch (IOException e) {
-            Ui.showFileError();
+            Ui.showFileWarning();
         }
     }
 
@@ -59,7 +59,7 @@ public class TaskManager {
         try {
             storage.saveToFile(this.tasks);
         } catch (IOException e) {
-            Ui.showFileError();
+            Ui.showFileWarning();
         }
     }
 
@@ -76,7 +76,7 @@ public class TaskManager {
         try {
             storage.saveToFile(this.tasks);
         } catch (IOException e) {
-            Ui.showFileError();
+            Ui.showFileWarning();
         }
     }
 

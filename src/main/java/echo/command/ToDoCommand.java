@@ -23,7 +23,7 @@ public class ToDoCommand extends Command {
     @Override
     public void execute() {
         if (this.splitUserInput.size() < 2) {
-            Ui.showInvalidArgumentsError("todo");
+            Ui.showInvalidArgumentsWarning("todo");
         } else {
             ToDo toDo = new ToDo(this.userInput.substring(5));
             this.taskManager.addTask(toDo, this.storage);

@@ -3,16 +3,12 @@ package echo;
 import echo.task.TaskManager;
 
 public class Ui {
-    public static void showLineError(String line) {
-        System.out.println(Ui.wrapInDividers("ERROR: Could not parse line \"" + line + "\""));
+    public static void showLineWarning(String line) {
+        System.out.println(Ui.wrapInDividers("WARNING: Could not parse line \"" + line + "\""));
     }
 
-    public static void showFileFound() {
-        System.out.print(Ui.wrapInDividers("Saved file found"));
-    }
-
-    public static void showFileError() {
-        System.out.print(Ui.wrapInDividers("ERROR: Could not access ./data/Echo.txt"));
+    public static void showFileWarning() {
+        System.out.print(Ui.wrapInDividers("WARNING: Could not access ./data/Echo.txt"));
     }
 
     public static void showTaskAdded(String toAdd) {
@@ -27,14 +23,14 @@ public class Ui {
         System.out.print(Ui.wrapInDividers(taskManager.toString()));
     }
 
-    public static void showInvalidTaskNumberError(TaskManager taskManager) {
+    public static void showInvalidTaskNumberWarning(TaskManager taskManager) {
         if (taskManager.getSize() > 1) {
             System.out.print(Ui.wrapInDividers(
-                    "ERROR: Task number should be from 1 to " + taskManager.getSize()));
+                    "WARNING: Task number should be from 1 to " + taskManager.getSize()));
         } else if (taskManager.getSize() == 1) {
-            System.out.print(Ui.wrapInDividers("ERROR: Task number can only be 1"));
+            System.out.print(Ui.wrapInDividers("WARNING: Task number can only be 1"));
         } else {
-            System.out.print(Ui.wrapInDividers("ERROR: No tasks added yet"));
+            System.out.print(Ui.wrapInDividers("WARNING: No tasks added yet"));
         }
     }
 
@@ -54,38 +50,35 @@ public class Ui {
         System.out.print(Ui.wrapInDividers("Bye. Hope to see you again soon!"));
     }
 
-    public static void showInvalidCommandError() {
-        System.out.print(Ui.wrapInDividers("ERROR: Command not recognized, please try again"));
+    public static void showInvalidCommandWarning() {
+        System.out.print(Ui.wrapInDividers("WARNING: Command not recognized, please try again"));
     }
 
-    public static void showInvalidArgumentsError(String command) {
+    public static void showInvalidArgumentsWarning(String command) {
         if (command.equals("mark")) {
             System.out.print(Ui.wrapInDividers(
-                    "ERROR: Invalid/Missing argument\nUSAGE: mark [task number]"));
+                    "WARNING: Invalid/Missing argument\nUSAGE: mark [task number]"));
         } else if (command.equals("unmark")) {
             System.out.print(Ui.wrapInDividers(
-                    "ERROR: Invalid/Missing argument\nUSAGE: unmark [task number]"));
+                    "WARNING: Invalid/Missing argument\nUSAGE: unmark [task number]"));
         } else if (command.equals("delete")) {
             System.out.print(Ui.wrapInDividers(
-                    "ERROR: Invalid/Missing argument\nUSAGE: delete [task number]"));
+                    "WARNING: Invalid/Missing argument\nUSAGE: delete [task number]"));
         } else if (command.equals("todo")) {
             System.out.print(Ui.wrapInDividers(
-                    "ERROR: Invalid/Missing argument\nUSAGE: todo [name/description of todo]"));
+                    "WARNING: Invalid/Missing argument\nUSAGE: todo [name/description of todo]"));
         } else if (command.equals("event")) {
             System.out.print(Ui.wrapInDividers(
-                    "ERROR: Invalid/Missing argument(s)\nUSAGE: event [name/description of event] /from [date] " +
+                    "WARNING: Invalid/Missing argument(s)\nUSAGE: event [name/description of event] /from [date] " +
                             "/to [date]"));
         } else if (command.equals("deadline")) {
             System.out.print(Ui.wrapInDividers(
-                    "ERROR: Invalid/Missing argument\nUSAGE: deadline [name/description of deadline] /by [date]"));
+                    "WARNING: Invalid/Missing argument\nUSAGE: deadline [name/description of deadline] /by [date]"));
         }
     }
 
-    private static String wrapInDividers(String msg) {
-        return String.format("""
-                ------------------------------------------------------------
-                %s
-                ------------------------------------------------------------
-                """, msg);
+    public static String wrapInDividers(String msg) {
+        String divider = "------------------------------------------------------------";
+        return String.format("%s\n%s\n%s\n", divider, msg, divider);
     }
 }

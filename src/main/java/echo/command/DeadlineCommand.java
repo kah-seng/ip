@@ -27,7 +27,7 @@ public class DeadlineCommand extends Command {
         int byIndex = this.userInput.indexOf(" /by ");
 
         if (this.splitUserInput.size() < 4 || byIndex < 0) {
-            Ui.showInvalidArgumentsError("deadline");
+            Ui.showInvalidArgumentsWarning("deadline");
         } else {
             try {
                 // Start from index 9 to remove "deadline "
@@ -37,7 +37,7 @@ public class DeadlineCommand extends Command {
                 Deadline deadline = new Deadline(name, by);
                 this.taskManager.addTask(deadline, this.storage);
             } catch (DateTimeParseException e) {
-                Ui.showInvalidArgumentsError("deadline");
+                Ui.showInvalidArgumentsWarning("deadline");
             }
         }
     }

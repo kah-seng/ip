@@ -1,6 +1,7 @@
 package echo;
 
 import echo.command.Command;
+import echo.exception.InvalidCommandException;
 import echo.task.TaskManager;
 
 import java.io.IOException;
@@ -27,15 +28,19 @@ public class Echo {
         try {
             taskManager = this.storage.createTaskManager();
         } catch (IOException e) {
-            Ui.showFileError();
+            Ui.showFileWarning();
         }
 
         while (true) {
             String userInput = scanner.nextLine();
-            Command command = Parser.parse(userInput, taskManager, storage);
-            command.execute();
-            if (command.isExit()) {
-                break;
+            try {
+                Command command = Parser.parse(userInput, taskManager, storage);
+                command.execute();
+                if (command.isExit()) {
+                    break;
+                }
+            } catch (InvalidCommandException e) {
+                Ui.showInvalidCommandWarning();
             }
         }
     }
