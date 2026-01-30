@@ -22,14 +22,14 @@ public class Echo {
     }
 
     private void run() {
-        Message.welcome();
+        Ui.showWelcome();
 
         Scanner scanner = new Scanner(System.in);
         TaskManager taskManager = new TaskManager();
         try {
             taskManager = this.storage.createTaskManager();
         } catch (IOException e) {
-            Message.fileError();
+            Ui.showFileError();
         }
 
         while (true) {
@@ -53,16 +53,16 @@ public class Echo {
             } else if (command.equals("delete")) {
                 deleteHandler(splitUserInput, taskManager);
             } else {
-                Message.invalidCommand();
+                Ui.showInvalidCommandError();
             }
         }
 
-        Message.bye();
+        Ui.showBye();
     }
 
     private void markUnmarkHandler(String command, ArrayList<String> splitUserInput, TaskManager taskManager) {
         if (splitUserInput.size() != 2) {
-            Message.invalidArguments(command);
+            Ui.showInvalidArgumentsError(command);
             return;
         }
 
@@ -73,7 +73,7 @@ public class Echo {
                 taskManager.unmarkTask(splitUserInput.get(1), this.storage);
             }
         } catch (InvalidTaskNumberException e) {
-            Message.invalidTaskNumber(taskManager);
+            Ui.showInvalidTaskNumberError(taskManager);
         }
     }
 
@@ -81,7 +81,7 @@ public class Echo {
         int byIndex = userInput.indexOf(" /by ");
 
         if (splitUserInput.size() < 4 || byIndex < 0) {
-            Message.invalidArguments("deadline");
+            Ui.showInvalidArgumentsError("deadline");
         } else {
             try {
                 // Start from index 9 to remove "deadline "
@@ -91,7 +91,7 @@ public class Echo {
                 Deadline deadline = new Deadline(name, by);
                 taskManager.addTask(deadline, this.storage);
             } catch (DateTimeParseException e) {
-                Message.invalidArguments("deadline");
+                Ui.showInvalidArgumentsError("deadline");
             }
         }
     }
@@ -101,7 +101,7 @@ public class Echo {
         int toIndex = userInput.indexOf(" /to ");
 
         if (splitUserInput.size() < 6 || fromIndex < 0 || toIndex < 0 || toIndex < fromIndex) {
-            Message.invalidArguments("event");
+            Ui.showInvalidArgumentsError("event");
         } else {
             try {
                 // Start from index 6 to remove "event "
@@ -113,14 +113,14 @@ public class Echo {
                 Event event = new Event(name, from, to);
                 taskManager.addTask(event, this.storage);
             } catch (DateTimeParseException e) {
-                Message.invalidArguments("event");
+                Ui.showInvalidArgumentsError("event");
             }
         }
     }
 
     private void toDoHandler(ArrayList<String> splitUserInput, String userInput, TaskManager taskManager) {
         if (splitUserInput.size() < 2) {
-            Message.invalidArguments("todo");
+            Ui.showInvalidArgumentsError("todo");
         } else {
             ToDo toDo = new ToDo(userInput.substring(5));
             taskManager.addTask(toDo, this.storage);
@@ -129,14 +129,14 @@ public class Echo {
 
     private void deleteHandler(ArrayList<String> splitUserInput, TaskManager taskManager) {
         if (splitUserInput.size() != 2) {
-            Message.invalidArguments("delete");
+            Ui.showInvalidArgumentsError("delete");
             return;
         }
 
         try {
             taskManager.deleteTask(splitUserInput.get(1), this.storage);
         } catch (InvalidTaskNumberException e) {
-            Message.invalidTaskNumber(taskManager);
+            Ui.showInvalidTaskNumberError(taskManager);
         }
     }
 }

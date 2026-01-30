@@ -16,12 +16,12 @@ public class TaskManager {
 
     public void addTask(Task task, Storage storage) {
         this.tasks.add(task);
-        Message.taskAdded(task.toString());
+        Ui.showTaskAdded(task.toString());
 
         try {
             storage.saveToFile(this.tasks);
         } catch (IOException e) {
-            Message.fileError();
+            Ui.showFileError();
         }
     }
 
@@ -32,13 +32,13 @@ public class TaskManager {
             throw new InvalidTaskNumberException();
         }
 
-        Message.taskDeleted(this.tasks.get(taskNumber - 1).toString());
+        Ui.showTaskDeleted(this.tasks.get(taskNumber - 1).toString());
         this.tasks.remove(taskNumber - 1);
 
         try {
             storage.saveToFile(this.tasks);
         } catch (IOException e) {
-            Message.fileError();
+            Ui.showFileError();
         }
     }
 
@@ -50,12 +50,12 @@ public class TaskManager {
         }
 
         this.tasks.get(taskNumber - 1).setIsDone(true);
-        Message.taskMarked(this.tasks.get(taskNumber - 1).toString());
+        Ui.showTaskMarked(this.tasks.get(taskNumber - 1).toString());
 
         try {
             storage.saveToFile(this.tasks);
         } catch (IOException e) {
-            Message.fileError();
+            Ui.showFileError();
         }
     }
 
@@ -67,12 +67,12 @@ public class TaskManager {
         }
 
         this.tasks.get(taskNumber - 1).setIsDone(false);
-        Message.taskUnmarked(this.tasks.get(taskNumber - 1).toString());
+        Ui.showTaskUnmarked(this.tasks.get(taskNumber - 1).toString());
 
         try {
             storage.saveToFile(this.tasks);
         } catch (IOException e) {
-            Message.fileError();
+            Ui.showFileError();
         }
     }
 
@@ -86,7 +86,7 @@ public class TaskManager {
     }
 
     public void list() {
-        Message.list(this);
+        Ui.showList(this);
     }
 
     public int getSize() {
