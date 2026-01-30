@@ -9,6 +9,15 @@ import java.util.Arrays;
 import java.util.Collections;
 
 public class Parser {
+    /**
+     * Returns a subclass of Command according to the first word of the user's input.
+     *
+     * @param userInput Line that the user typed.
+     * @param taskManager TaskManager instance of current execution.
+     * @param storage Storage instance of current execution.
+     * @return Parsed subclass of Command.
+     * @throws InvalidCommandException If command does not match any existing commands.
+     */
     public static Command parse(String userInput, TaskManager taskManager, Storage storage)
             throws InvalidCommandException {
         ArrayList<String> splitUserInput = new ArrayList<>(Arrays.asList(userInput.split(" ")));

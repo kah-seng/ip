@@ -22,6 +22,9 @@ public class EventCommand extends Command {
         this.storage = storage;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void execute() {
         int fromIndex = this.userInput.indexOf(" /from ");
