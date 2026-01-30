@@ -89,8 +89,14 @@ public class TaskManager {
         }
     }
 
-    public void list() {
-        Ui.showList(this);
+    public TaskManager filter(String searchString) {
+        TaskManager filteredTaskManager = new TaskManager();
+        for (Task task : this.tasks) {
+            if (task.isMatch(searchString)) {
+                filteredTaskManager.tasks.add(task);
+            }
+        }
+        return filteredTaskManager;
     }
 
     public int getSize() {
@@ -99,7 +105,7 @@ public class TaskManager {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder("Here are the tasks in your list:");
+        StringBuilder sb = new StringBuilder();
         for (int i = 0; i < this.tasks.size(); i++) {
             Task task = this.tasks.get(i);
             sb.append(String.format("\n%d. %s", i + 1, task.toString()));
