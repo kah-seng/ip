@@ -1,3 +1,7 @@
+package echo;
+
+import echo.task.TaskManager;
+
 public class Ui {
     public static void showLineError(String line) {
         System.out.println(Ui.wrapInDividers("ERROR: Could not parse line \"" + line + "\""));
@@ -79,11 +83,9 @@ public class Ui {
 
     private static String wrapInDividers(String msg) {
         return String.format("""
-                
                 ------------------------------------------------------------
                 %s
                 ------------------------------------------------------------
-                
                 """, msg);
     }
 }
