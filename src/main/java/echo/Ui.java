@@ -20,7 +20,11 @@ public class Ui {
     }
 
     public static void showList(TaskManager taskManager) {
-        System.out.print(Ui.wrapInDividers(taskManager.toString()));
+        System.out.print(Ui.wrapInDividers("Here are the tasks in your list:" + taskManager.toString()));
+    }
+
+    public static void showFind(TaskManager taskManager) {
+        System.out.print(Ui.wrapInDividers("Here are the matching tasks in your list:" + taskManager.toString()));
     }
 
     public static void showInvalidTaskNumberWarning(TaskManager taskManager) {
@@ -74,6 +78,8 @@ public class Ui {
         } else if (command.equals("deadline")) {
             System.out.print(Ui.wrapInDividers(
                     "WARNING: Invalid/Missing argument\nUSAGE: deadline [name/description of deadline] /by [date]"));
+        } else if (command.equals("find")) {
+            System.out.print(Ui.wrapInDividers("WARNING: Invalid/Missing argument\nUSAGE: find [keyword(s)]"));
         }
     }
 

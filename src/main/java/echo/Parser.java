@@ -31,6 +31,8 @@ public class Parser {
             return new ToDoCommand(splitUserInput, userInput, taskManager, storage);
         } else if (commandString.equals("delete")) {
             return new DeleteCommand(splitUserInput, taskManager, storage);
+        } else if (commandString.equals("find")) {
+            return new FindCommand(userInput, taskManager);
         } else {
             throw new InvalidCommandException();
         }

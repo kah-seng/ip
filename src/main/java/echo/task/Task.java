@@ -17,6 +17,10 @@ public abstract class Task {
         return this.toString();
     }
 
+    public boolean isMatch(String searchString) {
+        return name.contains(searchString);
+    }
+
     @Override
     public String toString() {
         return String.format("[%c] %s", this.isDone ? 'X' : ' ', this.name);

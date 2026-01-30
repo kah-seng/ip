@@ -1,5 +1,6 @@
 package echo.command;
 
+import echo.Ui;
 import echo.task.TaskManager;
 
 public class ListCommand extends Command {
@@ -11,6 +12,6 @@ public class ListCommand extends Command {
 
     @Override
     public void execute() {
-        this.taskManager.list();
+        Ui.showList(this.taskManager);
     }
 }
