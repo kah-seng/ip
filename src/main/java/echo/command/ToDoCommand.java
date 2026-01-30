@@ -13,7 +13,8 @@ public class ToDoCommand extends Command {
     private TaskManager taskManager;
     private Storage storage;
 
-    public ToDoCommand(ArrayList<String> splitUserInput, String userInput, TaskManager taskManager, Storage storage) {
+    public ToDoCommand(ArrayList<String> splitUserInput, String userInput, TaskManager taskManager,
+                       Storage storage) {
         this.splitUserInput = splitUserInput;
         this.userInput = userInput;
         this.taskManager = taskManager;
