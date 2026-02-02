@@ -1,8 +1,8 @@
 list
 mark 1
 unmark 1
-deadline Homework 1 /by Monday 2pm
-event Meeting 1 /from Tuesday 5pm /to 7pm
+deadline Homework 1 /by 2027-12-12
+event Meeting 1 /from 2026-03-12 5pm /to 2026-03-12
 todo Task 1
 list
 mark 0
