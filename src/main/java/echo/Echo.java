@@ -44,4 +44,8 @@ public class Echo {
             }
         }
     }
+
+    public String getResponse(String userInput) {
+        return "Echo heard: " + userInput;
+    }
 }
