@@ -1,5 +1,6 @@
 package echo;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
@@ -35,11 +36,16 @@ public class MainWindow extends AnchorPane {
     @FXML
     private void handleUserInput() {
         String userInput = this.userInput.getText();
-        String response = this.echo.getResponse(userInput);
-        this.dialogContainer.getChildren().addAll(
-                DialogBox.getUserDialog(userInput, this.userImage),
-                DialogBox.getEchoDialog(response, this.echoImage)
+        this.dialogContainer.getChildren().add(
+                DialogBox.getUserDialog(userInput, this.userImage)
         );
         this.userInput.clear();
+        this.echo.parseAndExecute(userInput);
+    }
+
+    public void showMessage(String message) {
+        this.dialogContainer.getChildren().add(
+                DialogBox.getEchoDialog(message, this.echoImage)
+        );
     }
 }

@@ -3,19 +3,21 @@ package echo;
 import echo.task.TaskManager;
 
 public class Ui {
+    public static MainWindow mainWindow;
+
     /**
      * Warns user that a line in the saved text file is invalid.
      * @param line A single line in the text file.
      */
     public static void showLineWarning(String line) {
-        System.out.println(Ui.wrapInDividers("WARNING: Could not parse line \"" + line + "\""));
+        mainWindow.showMessage("WARNING: Could not parse line \"" + line + "\"");
     }
 
     /**
      * Warns user that the program failed to access the saved text file.
      */
     public static void showFileWarning() {
-        System.out.print(Ui.wrapInDividers("WARNING: Could not access ./data/Echo.txt"));
+        mainWindow.showMessage("WARNING: Could not access ./data/Echo.txt");
     }
 
     /**
@@ -23,7 +25,7 @@ public class Ui {
      * @param toAdd Description of the new task.
      */
     public static void showTaskAdded(String toAdd) {
-        System.out.print(Ui.wrapInDividers("ADDED: " + toAdd));
+        mainWindow.showMessage("ADDED: " + toAdd);
     }
 
     /**
@@ -31,7 +33,7 @@ public class Ui {
      * @param toRemove Description of the task to delete.
      */
     public static void showTaskDeleted(String toRemove) {
-        System.out.print(Ui.wrapInDividers("REMOVED: " + toRemove));
+        mainWindow.showMessage("REMOVED: " + toRemove);
     }
 
     /**
@@ -39,11 +41,11 @@ public class Ui {
      * @param taskManager TaskManager instance to list the tasks from.
      */
     public static void showList(TaskManager taskManager) {
-        System.out.print(Ui.wrapInDividers("Here are the tasks in your list:" + taskManager.toString()));
+        mainWindow.showMessage("Here are the tasks in your list:" + taskManager.toString());
     }
 
     public static void showFind(TaskManager taskManager) {
-        System.out.print(Ui.wrapInDividers("Here are the matching tasks in your list:" + taskManager.toString()));
+        mainWindow.showMessage("Here are the matching tasks in your list:" + taskManager.toString());
     }
 
     /**
@@ -52,12 +54,12 @@ public class Ui {
      */
     public static void showInvalidTaskNumberWarning(TaskManager taskManager) {
         if (taskManager.getSize() > 1) {
-            System.out.print(Ui.wrapInDividers(
-                    "WARNING: Task number should be from 1 to " + taskManager.getSize()));
+            mainWindow.showMessage(
+                    "WARNING: Task number should be from 1 to " + taskManager.getSize());
         } else if (taskManager.getSize() == 1) {
-            System.out.print(Ui.wrapInDividers("WARNING: Task number can only be 1"));
+            mainWindow.showMessage("WARNING: Task number can only be 1");
         } else {
-            System.out.print(Ui.wrapInDividers("WARNING: No tasks added yet"));
+            mainWindow.showMessage("WARNING: No tasks added yet");
         }
     }
 
@@ -66,7 +68,7 @@ public class Ui {
      * @param taskString Description of the task to be marked as done.
      */
     public static void showTaskMarked(String taskString) {
-        System.out.print(Ui.wrapInDividers("MARKED: " + taskString));
+        mainWindow.showMessage("MARKED: " + taskString);
     }
 
     /**
@@ -74,28 +76,28 @@ public class Ui {
      * @param taskString Description of the task to be unmarked.
      */
     public static void showTaskUnmarked(String taskString) {
-        System.out.print(Ui.wrapInDividers("UNMARKED: " + taskString));
+        mainWindow.showMessage("UNMARKED: " + taskString);
     }
 
     /**
      * Shows welcome message.
      */
     public static void showWelcome() {
-        System.out.print(Ui.wrapInDividers("Hello! I'm Echo.\nWhat can I do for you?"));
+        mainWindow.showMessage("Hello! I'm Echo.\nWhat can I do for you?");
     }
 
     /**
      * Shows bye message.
      */
     public static void showBye() {
-        System.out.print(Ui.wrapInDividers("Bye. Hope to see you again soon!"));
+        mainWindow.showMessage("Bye. Hope to see you again soon!");
     }
 
     /**
      * Shows warning when user types an invalid command.
      */
     public static void showInvalidCommandWarning() {
-        System.out.print(Ui.wrapInDividers("WARNING: Command not recognized, please try again"));
+        mainWindow.showMessage("WARNING: Command not recognized, please try again");
     }
 
     /**
@@ -104,36 +106,26 @@ public class Ui {
      */
     public static void showInvalidArgumentsWarning(String command) {
         if (command.equals("mark")) {
-            System.out.print(Ui.wrapInDividers(
-                    "WARNING: Invalid/Missing argument\nUSAGE: mark [task number]"));
+            mainWindow.showMessage(
+                    "WARNING: Invalid/Missing argument\nUSAGE: mark [task number]");
         } else if (command.equals("unmark")) {
-            System.out.print(Ui.wrapInDividers(
-                    "WARNING: Invalid/Missing argument\nUSAGE: unmark [task number]"));
+            mainWindow.showMessage(
+                    "WARNING: Invalid/Missing argument\nUSAGE: unmark [task number]");
         } else if (command.equals("delete")) {
-            System.out.print(Ui.wrapInDividers(
-                    "WARNING: Invalid/Missing argument\nUSAGE: delete [task number]"));
+            mainWindow.showMessage(
+                    "WARNING: Invalid/Missing argument\nUSAGE: delete [task number]");
         } else if (command.equals("todo")) {
-            System.out.print(Ui.wrapInDividers(
-                    "WARNING: Invalid/Missing argument\nUSAGE: todo [name/description of todo]"));
+            mainWindow.showMessage(
+                    "WARNING: Invalid/Missing argument\nUSAGE: todo [name/description of todo]");
         } else if (command.equals("event")) {
-            System.out.print(Ui.wrapInDividers(
+            mainWindow.showMessage(
                     "WARNING: Invalid/Missing argument(s)\nUSAGE: event [name/description of event] /from [date] " +
-                            "/to [date]"));
+                            "/to [date]");
         } else if (command.equals("deadline")) {
-            System.out.print(Ui.wrapInDividers(
-                    "WARNING: Invalid/Missing argument\nUSAGE: deadline [name/description of deadline] /by [date]"));
+            mainWindow.showMessage(
+                    "WARNING: Invalid/Missing argument\nUSAGE: deadline [name/description of deadline] /by [date]");
         } else if (command.equals("find")) {
-            System.out.print(Ui.wrapInDividers("WARNING: Invalid/Missing argument\nUSAGE: find [keyword(s)]"));
+            mainWindow.showMessage("WARNING: Invalid/Missing argument\nUSAGE: find [keyword(s)]");
         }
-    }
-
-    /**
-     * Wraps a message in between horizontal dividers.
-     * @param msg Message to be wrapped.
-     * @return Wrapped message.
-     */
-    public static String wrapInDividers(String msg) {
-        String divider = "------------------------------------------------------------";
-        return String.format("%s\n%s\n%s\n", divider, msg, divider);
     }
 }

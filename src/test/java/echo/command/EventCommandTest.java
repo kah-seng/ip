@@ -22,8 +22,8 @@ public class EventCommandTest {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outputStream));
 
-        String expected = Ui.wrapInDividers("WARNING: Invalid/Missing argument(s)\n" +
-                "USAGE: event [name/description of event] /from [date] /to [date]");
+        String expected = "WARNING: Invalid/Missing argument(s)\n" +
+                "USAGE: event [name/description of event] /from [date] /to [date]";
         String userInput = "event meeting /to 2022-12-02";
         ArrayList<String> splitUserInput = new ArrayList<>(Arrays.asList(userInput.split(" ")));
         splitUserInput.removeAll(Collections.singleton(""));
@@ -37,8 +37,8 @@ public class EventCommandTest {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outputStream));
 
-        String expected = Ui.wrapInDividers("WARNING: Invalid/Missing argument(s)\n" +
-                "USAGE: event [name/description of event] /from [date] /to [date]");
+        String expected = "WARNING: Invalid/Missing argument(s)\n" +
+                "USAGE: event [name/description of event] /from [date] /to [date]";
         String userInput = "event meeting /from 2022-12-02";
         ArrayList<String> splitUserInput = new ArrayList<>(Arrays.asList(userInput.split(" ")));
         splitUserInput.removeAll(Collections.singleton(""));
@@ -52,8 +52,8 @@ public class EventCommandTest {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outputStream));
 
-        String expected = Ui.wrapInDividers("WARNING: Invalid/Missing argument(s)\n" +
-                "USAGE: event [name/description of event] /from [date] /to [date]");
+        String expected = "WARNING: Invalid/Missing argument(s)\n" +
+                "USAGE: event [name/description of event] /from [date] /to [date]";
         String userInput = "event meeting /from 2222-22-22";
         ArrayList<String> splitUserInput = new ArrayList<>(Arrays.asList(userInput.split(" ")));
         splitUserInput.removeAll(Collections.singleton(""));
@@ -67,7 +67,7 @@ public class EventCommandTest {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outputStream));
 
-        String expected = Ui.wrapInDividers("ADDED: [E][ ] presentation (from: 12/Dec/2027, to: 13/Dec/2027)");
+        String expected = "ADDED: [E][ ] presentation (from: 12/Dec/2027, to: 13/Dec/2027)";
         String userInput = "event presentation /from 2027-12-12 /to 2027-12-13";
         ArrayList<String> splitUserInput = new ArrayList<>(Arrays.asList(userInput.split(" ")));
         splitUserInput.removeAll(Collections.singleton(""));
