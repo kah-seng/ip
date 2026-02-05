@@ -26,12 +26,12 @@ public class EventCommand extends Command {
      * {@inheritDoc}
      */
     @Override
-    public void execute() {
+    public String execute() {
         int fromIndex = this.userInput.indexOf(" /from ");
         int toIndex = this.userInput.indexOf(" /to ");
 
         if (this.splitUserInput.size() < 6 || fromIndex < 0 || toIndex < 0 || toIndex < fromIndex) {
-            Ui.showInvalidArgumentsWarning("event");
+            return Ui.getInvalidArgumentsWarning("event");
         } else {
             try {
                 // Start from index 6 to remove "event "
@@ -41,9 +41,9 @@ public class EventCommand extends Command {
                 // +5 to remove " /to "
                 LocalDate to = LocalDate.parse(this.userInput.substring(toIndex + 5));
                 Event event = new Event(name, from, to);
-                this.taskManager.addTask(event, this.storage);
+                return this.taskManager.addTask(event, this.storage);
             } catch (DateTimeParseException e) {
-                Ui.showInvalidArgumentsWarning("event");
+                return Ui.getInvalidArgumentsWarning("event");
             }
         }
     }

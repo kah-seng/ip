@@ -22,16 +22,15 @@ public class MarkCommand extends Command {
      * {@inheritDoc}
      */
     @Override
-    public void execute() {
+    public String execute() {
         if (this.splitUserInput.size() != 2) {
-            Ui.showInvalidArgumentsWarning("mark");
-            return;
+            return Ui.getInvalidArgumentsWarning("mark");
         }
 
         try {
-            this.taskManager.markTask(this.splitUserInput.get(1), this.storage);
+            return this.taskManager.markTask(this.splitUserInput.get(1), this.storage);
         } catch (InvalidTaskNumberException e) {
-            Ui.showInvalidTaskNumberWarning(this.taskManager);
+            return Ui.getInvalidTaskNumberWarning(this.taskManager);
         }
     }
 }

@@ -7,8 +7,6 @@ import javafx.application.Platform;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Scanner;
 
 public class Echo {
     private Storage storage;
@@ -23,15 +21,15 @@ public class Echo {
         }
     }
 
-    public void parseAndExecute(String userInput) {
+    public String parseAndExecute(String userInput) {
         try {
             Command command = Parser.parse(userInput, this.taskManager, this.storage);
-            command.execute();
             if (command.isExit()) {
                 Platform.exit();
             }
+            return command.execute();
         } catch (InvalidCommandException e) {
-            Ui.showInvalidCommandWarning();
+            return Ui.getInvalidCommandWarning();
         }
     }
 }

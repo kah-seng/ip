@@ -21,8 +21,6 @@ public class Main extends Application {
             stage.setScene(scene);
             MainWindow mainWindow = fxmlLoader.<MainWindow>getController();
             mainWindow.setEcho(this.echo);
-            Ui.mainWindow = mainWindow;
-            Ui.showWelcome();
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();

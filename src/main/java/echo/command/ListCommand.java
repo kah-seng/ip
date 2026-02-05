@@ -14,7 +14,7 @@ public class ListCommand extends Command {
      * {@inheritDoc}
      */
     @Override
-    public void execute() {
-        Ui.showList(this.taskManager);
+    public String execute() {
+        return Ui.getList(this.taskManager);
     }
 }

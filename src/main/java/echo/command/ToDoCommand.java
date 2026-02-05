@@ -25,12 +25,12 @@ public class ToDoCommand extends Command {
      * {@inheritDoc}
      */
     @Override
-    public void execute() {
+    public String execute() {
         if (this.splitUserInput.size() < 2) {
-            Ui.showInvalidArgumentsWarning("todo");
+            return Ui.getInvalidArgumentsWarning("todo");
         } else {
             ToDo toDo = new ToDo(this.userInput.substring(5));
-            this.taskManager.addTask(toDo, this.storage);
+            return this.taskManager.addTask(toDo, this.storage);
         }
     }
 }

@@ -16,7 +16,7 @@ public class ByeCommand extends Command {
      * {@inheritDoc}
      */
     @Override
-    public void execute() {
-        Ui.showBye();
+    public String execute() {
+        return Ui.getBye();
     }
 }

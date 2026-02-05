@@ -27,6 +27,9 @@ public class MainWindow extends AnchorPane {
     @FXML
     private void initialize() {
         this.scrollPane.vvalueProperty().bind(this.dialogContainer.heightProperty());
+        this.dialogContainer.getChildren().add(
+                DialogBox.getEchoDialog(Ui.getWelcome(), this.echoImage)
+        );
     }
 
     public void setEcho(Echo echo) {
@@ -36,16 +39,12 @@ public class MainWindow extends AnchorPane {
     @FXML
     private void handleUserInput() {
         String userInput = this.userInput.getText();
-        this.dialogContainer.getChildren().add(
-                DialogBox.getUserDialog(userInput, this.userImage)
+        String response = this.echo.parseAndExecute(userInput);
+        this.dialogContainer.getChildren().addAll(
+                DialogBox.getUserDialog(userInput, this.userImage),
+                DialogBox.getEchoDialog(response, this.echoImage)
         );
         this.userInput.clear();
-        this.echo.parseAndExecute(userInput);
-    }
 
-    public void showMessage(String message) {
-        this.dialogContainer.getChildren().add(
-                DialogBox.getEchoDialog(message, this.echoImage)
-        );
     }
 }
