@@ -22,8 +22,8 @@ public class DeadlineCommandTest {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outputStream));
 
-        String expected = Ui.wrapInDividers("WARNING: Invalid/Missing argument\n"
-                + "USAGE: deadline [name/description of deadline] /by [date]");
+        String expected = "WARNING: Invalid/Missing argument\n"
+                + "USAGE: deadline [name/description of deadline] /by [date]";
         String userInput = "deadline homework";
         ArrayList<String> splitUserInput = new ArrayList<>(Arrays.asList(userInput.split(" ")));
         splitUserInput.removeAll(Collections.singleton(""));
@@ -37,8 +37,8 @@ public class DeadlineCommandTest {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outputStream));
 
-        String expected = Ui.wrapInDividers("WARNING: Invalid/Missing argument\n"
-                + "USAGE: deadline [name/description of deadline] /by [date]");
+        String expected = "WARNING: Invalid/Missing argument\n"
+                + "USAGE: deadline [name/description of deadline] /by [date]";
         String userInput = "deadline assignment /by 19 March 2027";
         ArrayList<String> splitUserInput = new ArrayList<>(Arrays.asList(userInput.split(" ")));
         splitUserInput.removeAll(Collections.singleton(""));
@@ -52,7 +52,7 @@ public class DeadlineCommandTest {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outputStream));
 
-        String expected = Ui.wrapInDividers("ADDED: [D][ ] homework (by: 10/Mar/2027)");
+        String expected = "ADDED: [D][ ] homework (by: 10/Mar/2027)";
         String userInput = "deadline homework /by 2027-03-10";
         ArrayList<String> splitUserInput = new ArrayList<>(Arrays.asList(userInput.split(" ")));
         splitUserInput.removeAll(Collections.singleton(""));
