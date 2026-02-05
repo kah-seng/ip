@@ -19,32 +19,24 @@ import java.util.Collections;
 public class DeadlineCommandTest {
     @Test
     public void execute_missingByArgument_errorMessageShown() {
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outputStream));
-
-        String expected = "WARNING: Invalid/Missing argument\n"
-                + "USAGE: deadline [name/description of deadline] /by [date]";
+        String expected = Ui.getInvalidArgumentsWarning("deadline");
         String userInput = "deadline homework";
         ArrayList<String> splitUserInput = new ArrayList<>(Arrays.asList(userInput.split(" ")));
         splitUserInput.removeAll(Collections.singleton(""));
 
-        new DeadlineCommand(splitUserInput, userInput, null, null).execute();
-        assertEquals(expected, outputStream.toString());
+        String actual = new DeadlineCommand(splitUserInput, userInput, null, null).execute();
+        assertEquals(expected, actual);
     }
 
     @Test
     public void execute_invalidDate_errorMessageShown() {
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outputStream));
-
-        String expected = "WARNING: Invalid/Missing argument\n"
-                + "USAGE: deadline [name/description of deadline] /by [date]";
+        String expected = Ui.getInvalidArgumentsWarning("deadline");
         String userInput = "deadline assignment /by 19 March 2027";
         ArrayList<String> splitUserInput = new ArrayList<>(Arrays.asList(userInput.split(" ")));
         splitUserInput.removeAll(Collections.singleton(""));
 
-        new DeadlineCommand(splitUserInput, userInput, null, null).execute();
-        assertEquals(expected, outputStream.toString());
+        String actual = new DeadlineCommand(splitUserInput, userInput, null, null).execute();
+        assertEquals(expected, actual);
     }
 
     @Test
@@ -60,8 +52,8 @@ public class DeadlineCommandTest {
         try {
             Storage storage = new Storage(Paths.get("data", "test", "Echo.txt"));
             TaskManager taskManager = storage.createTaskManager();
-            new DeadlineCommand(splitUserInput, userInput, taskManager, storage).execute();
-            assertEquals(expected, outputStream.toString());
+            String actual = new DeadlineCommand(splitUserInput, userInput, taskManager, storage).execute();
+            assertEquals(expected, actual);
         } catch (IOException e) {
             fail();
         }

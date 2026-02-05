@@ -22,16 +22,15 @@ public class DeleteCommand extends Command {
      * {@inheritDoc}
      */
     @Override
-    public void execute() {
+    public String execute() {
         if (this.splitUserInput.size() != 2) {
-            Ui.showInvalidArgumentsWarning("delete");
-            return;
+            return Ui.getInvalidArgumentsWarning("delete");
         }
 
         try {
-            this.taskManager.deleteTask(this.splitUserInput.get(1), this.storage);
+            return this.taskManager.deleteTask(this.splitUserInput.get(1), this.storage);
         } catch (InvalidTaskNumberException e) {
-            Ui.showInvalidTaskNumberWarning(this.taskManager);
+            return Ui.getInvalidTaskNumberWarning(this.taskManager);
         }
     }
 }

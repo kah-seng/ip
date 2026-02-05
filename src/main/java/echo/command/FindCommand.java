@@ -13,13 +13,13 @@ public class FindCommand extends Command {
     }
 
     @Override
-    public void execute() {
+    public String execute() {
         String searchString = this.userInput.substring(5).trim();
         if (searchString.length() <= 0) {
-            Ui.showInvalidArgumentsWarning("find");
+            return Ui.getInvalidArgumentsWarning("find");
         } else {
             TaskManager filteredTaskManager = this.taskManager.filter(searchString);
-            Ui.showFind(filteredTaskManager);
+            return Ui.getFind(filteredTaskManager);
         }
     }
 }

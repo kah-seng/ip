@@ -18,65 +18,63 @@ public class TaskManager {
         this.tasks = tasks;
     }
 
-    public void addTask(Task task, Storage storage) {
-        this.tasks.add(task);
-        Ui.showTaskAdded(task.toString());
-
+    public String addTask(Task task, Storage storage) {
         try {
+            this.tasks.add(task);
             storage.saveToFile(this.tasks);
+            return Ui.getTaskAdded(task.toString());
         } catch (IOException e) {
-            Ui.showFileWarning();
+            return Ui.getFileWarning();
         }
     }
 
-    public void deleteTask(String taskNumberString, Storage storage) throws InvalidTaskNumberException {
+    public String deleteTask(String taskNumberString, Storage storage) throws InvalidTaskNumberException {
         int taskNumber = this.parseTaskNumber(taskNumberString);
 
         if (taskNumber < 0) {
             throw new InvalidTaskNumberException();
         }
 
-        Ui.showTaskDeleted(this.tasks.get(taskNumber - 1).toString());
-        this.tasks.remove(taskNumber - 1);
-
         try {
+            this.tasks.remove(taskNumber - 1);
             storage.saveToFile(this.tasks);
+            return Ui.getTaskDeleted(this.tasks.get(taskNumber - 1).toString());
         } catch (IOException e) {
-            Ui.showFileWarning();
+            return Ui.getFileWarning();
         }
     }
 
-    public void markTask(String taskNumberString, Storage storage) throws InvalidTaskNumberException {
+    public String markTask(String taskNumberString, Storage storage) throws InvalidTaskNumberException {
         int taskNumber = this.parseTaskNumber(taskNumberString);
 
         if (taskNumber < 0) {
             throw new InvalidTaskNumberException();
         }
 
-        this.tasks.get(taskNumber - 1).setIsDone(true);
-        Ui.showTaskMarked(this.tasks.get(taskNumber - 1).toString());
-
         try {
+            this.tasks.get(taskNumber - 1).setIsDone(true);
             storage.saveToFile(this.tasks);
+            return Ui.getTaskMarked(this.tasks.get(taskNumber - 1).toString());
         } catch (IOException e) {
-            Ui.showFileWarning();
+            return Ui.getFileWarning();
         }
     }
 
-    public void unmarkTask(String taskNumberString, Storage storage) throws InvalidTaskNumberException {
+    public String unmarkTask(String taskNumberString, Storage storage) throws InvalidTaskNumberException {
         int taskNumber = this.parseTaskNumber(taskNumberString);
 
         if (taskNumber < 0) {
             throw new InvalidTaskNumberException();
         }
 
-        this.tasks.get(taskNumber - 1).setIsDone(false);
-        Ui.showTaskUnmarked(this.tasks.get(taskNumber - 1).toString());
+
 
         try {
+            this.tasks.get(taskNumber - 1).setIsDone(false);
             storage.saveToFile(this.tasks);
+            return Ui.getTaskUnmarked(this.tasks.get(taskNumber - 1).toString());
         } catch (IOException e) {
-            Ui.showFileWarning();
+            return Ui.getFileWarning();
         }
     }
 
