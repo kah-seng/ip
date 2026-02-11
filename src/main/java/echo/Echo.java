@@ -27,7 +27,11 @@ public class Echo {
             if (command.isExit()) {
                 Platform.exit();
             }
-            return command.execute();
+
+            String response = command.execute();
+            assert response != null && !response.isEmpty() : "Response should never be empty";
+
+            return response;
         } catch (InvalidCommandException e) {
             return Ui.getInvalidCommandWarning();
         }
