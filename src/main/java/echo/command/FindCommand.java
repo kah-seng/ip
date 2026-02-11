@@ -15,10 +15,11 @@ public class FindCommand extends Command {
     @Override
     public String execute() {
         String searchString = this.userInput.substring(5).trim();
+        String[] splitSearchString = searchString.split(" ");
         if (searchString.length() <= 0) {
             return Ui.getInvalidArgumentsWarning("find");
         } else {
-            TaskManager filteredTaskManager = this.taskManager.filter(searchString);
+            TaskManager filteredTaskManager = this.taskManager.filter(splitSearchString);
             return Ui.getFind(filteredTaskManager);
         }
     }
