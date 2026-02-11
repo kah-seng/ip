@@ -87,11 +87,13 @@ public class TaskManager {
         }
     }
 
-    public TaskManager filter(String searchString) {
+    public TaskManager filter(String[] splitSearchString) {
         TaskManager filteredTaskManager = new TaskManager();
         for (Task task : this.tasks) {
-            if (task.isMatch(searchString)) {
-                filteredTaskManager.tasks.add(task);
+            for (String searchString : splitSearchString) {
+                if (task.isMatch(searchString)) {
+                    filteredTaskManager.tasks.add(task);
+                }
             }
         }
         return filteredTaskManager;
