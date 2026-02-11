@@ -13,11 +13,11 @@ public class Echo {
     private TaskManager taskManager;
 
     public Echo(Path path) {
-        this.storage = new Storage(path);
         try {
+            this.storage = new Storage(path);
             this.taskManager = this.storage.createTaskManager();
         } catch (IOException e) {
-
+            Platform.exit();
         }
     }
 
