@@ -15,15 +15,14 @@ import java.util.Scanner;
 public class Storage {
     private Path path;
 
-    public Storage(Path path) {
+    public Storage(Path path) throws IOException {
         this.path = path;
         try {
             Files.createDirectories(path.getParent());
             Files.createFile(path);
         } catch (FileAlreadyExistsException e) {
-
-        } catch (IOException e) {
-            Ui.getFileWarning();
+            // This catch clause is empty as this exception is only raised if the data file already exists.
+            // No further action needs to be taken as the chatbot should just read from this file subsequently.
         }
     }
 
