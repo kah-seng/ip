@@ -37,9 +37,10 @@ public class Storage {
 
         while (scanner.hasNextLine()) {
             String line = scanner.nextLine();
+
+            // Parse common fields of all task types
             char taskType;
             boolean isDone;
-
             int taskTypeIndex = line.indexOf('[');
             int isDoneIndex = line.indexOf('[', taskTypeIndex + 1);
             if (taskTypeIndex == -1 || taskTypeIndex >= line.length() - 3 || line.charAt(taskTypeIndex + 2) != ']'
@@ -52,7 +53,6 @@ public class Storage {
                 if (taskType != 'T' && taskType != 'E' && taskType != 'D') {
                     continue;
                 }
-
                 // Parse marked flag
                 if (line.charAt(isDoneIndex + 1) != ' ' && line.charAt(isDoneIndex + 1) != 'X') {
                     continue;
@@ -61,45 +61,65 @@ public class Storage {
             }
 
             if (taskType == 'T') {
-                Task task = new ToDo(line.substring(isDoneIndex + 4));
-                task.setIsDone(isDone);
-                tasks.add(task);
-                continue;
-            }
-
-            String taskName;
-            int dateTimeIndex = line.indexOf('(');
-            if (dateTimeIndex == -1 || line.substring(isDoneIndex + 1, dateTimeIndex - 1).length() <= 0) {
-                continue;
-            }
-            taskName = line.substring(isDoneIndex + 4, dateTimeIndex - 1);
-
-            if (taskType == 'E') {
-                try {
-                    int fromIndex = line.indexOf("from: ");
-                    int toIndex = line.indexOf("to: ");
-                    LocalDate from = LocalDate.parse(line.substring(fromIndex + 6, toIndex - 2));
-                    LocalDate to = LocalDate.parse(line.substring(toIndex + 4, line.length() - 1));
-                    Task task = new Event(taskName, from, to);
-                    task.setIsDone(isDone);
-                    tasks.add(task);
-                } catch (DateTimeParseException e) {
-                    continue;
-                }
+                parseToDo(line, isDoneIndex, isDone, tasks);
+            } else if (taskType == 'E') {
+                parseEvent(line, isDoneIndex, isDone, tasks);
             } else {
-                try {
-                    int byIndex = line.indexOf("by: ");
-                    LocalDate by = LocalDate.parse(line.substring(byIndex + 4, line.length() - 1));
-                    Task task = new Deadline(taskName, by);
-                    task.setIsDone(isDone);
-                    tasks.add(task);
-                } catch (DateTimeParseException e) {
-                    continue;
-                }
+                parseDeadline(line, isDoneIndex, isDone, tasks);
             }
         }
 
         return new TaskManager(tasks);
+    }
+
+    private void parseToDo(String line, int isDoneIndex, boolean isDone, ArrayList<Task> tasks) {
+        Task task = new ToDo(line.substring(isDoneIndex + 4));
+        task.setIsDone(isDone);
+        tasks.add(task);
+    }
+
+    private void parseEvent(String line, int isDoneIndex, boolean isDone, ArrayList<Task> tasks) {
+        String taskName = getTaskName(line, isDoneIndex);
+        if (taskName == null) {
+            return;
+        }
+
+        try {
+            int fromIndex = line.indexOf("from: ");
+            int toIndex = line.indexOf("to: ");
+            LocalDate from = LocalDate.parse(line.substring(fromIndex + 6, toIndex - 2));
+            LocalDate to = LocalDate.parse(line.substring(toIndex + 4, line.length() - 1));
+            Task task = new Event(taskName, from, to);
+            task.setIsDone(isDone);
+            tasks.add(task);
+        } catch (DateTimeParseException e) {
+            return;
+        }
+    }
+
+    private void parseDeadline(String line, int isDoneIndex, boolean isDone, ArrayList<Task> tasks) {
+        String taskName = getTaskName(line, isDoneIndex);
+        if (taskName == null) {
+            return;
+        }
+
+        try {
+            int byIndex = line.indexOf("by: ");
+            LocalDate by = LocalDate.parse(line.substring(byIndex + 4, line.length() - 1));
+            Task task = new Deadline(taskName, by);
+            task.setIsDone(isDone);
+            tasks.add(task);
+        } catch (DateTimeParseException e) {
+            return;
+        }
+    }
+
+    private String getTaskName(String line, int isDoneIndex) {
+        int dateTimeIndex = line.indexOf('(');
+        if (dateTimeIndex == -1 || line.substring(isDoneIndex + 1, dateTimeIndex - 1).length() <= 0) {
+            return null;
+        }
+        return line.substring(isDoneIndex + 4, dateTimeIndex - 1);
     }
 
     /**
