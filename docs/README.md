@@ -161,3 +161,6 @@ unmark 1
 MARKED: [E][X] Recess week (from: 23/Feb/2026, to: 27/Feb/2026)
 UNMARKED: [E][ ] Recess week (from: 23/Feb/2026, to: 27/Feb/2026)
 ```
+
+## Credits
+### Profile Images/Avatars: [Flaticon](https://www.flaticon.com/)
