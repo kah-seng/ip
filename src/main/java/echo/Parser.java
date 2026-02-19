@@ -20,8 +20,8 @@ public class Parser {
      */
     public static Command parse(String userInput, TaskManager taskManager, Storage storage)
             throws InvalidCommandException {
-        ArrayList<String> splitUserInput = new ArrayList<>(Arrays.asList(userInput.split(" ")));
-        splitUserInput.removeAll(Collections.singleton(""));
+        // Used Gemini to critique the code, changed line 24 to use trim() for more readable code
+        ArrayList<String> splitUserInput = new ArrayList<>(Arrays.asList(userInput.trim().split("\\s+")));
         String commandString = splitUserInput.isEmpty() ? "" : splitUserInput.get(0);
 
         if (userInput.equals("bye")) {

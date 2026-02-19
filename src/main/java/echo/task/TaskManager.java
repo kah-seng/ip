@@ -36,9 +36,11 @@ public class TaskManager {
         }
 
         try {
+            // Used Gemini to fix a bug where the delete command would delete the wrong task
+            Task taskToDelete = this.tasks.get(taskNumber - 1);
             this.tasks.remove(taskNumber - 1);
             storage.saveToFile(this.tasks);
-            return Ui.getTaskDeleted(this.tasks.get(taskNumber - 1).toString());
+            return Ui.getTaskDeleted(taskToDelete.toString());
         } catch (IOException e) {
             return Ui.getFileWarning();
         }
@@ -93,6 +95,7 @@ public class TaskManager {
             for (String searchString : splitSearchString) {
                 if (task.isMatch(searchString)) {
                     filteredTaskManager.tasks.add(task);
+                    break; // Used Gemini to fix a bug where a task would appear twice in the find command
                 }
             }
         }
