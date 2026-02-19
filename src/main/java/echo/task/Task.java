@@ -31,7 +31,7 @@ public abstract class Task {
      * @return Boolean value indicating if a match was found.
      */
     public boolean isMatch(String searchString) {
-        return name.contains(searchString);
+        return name.toLowerCase().contains(searchString);
     }
 
     /**

@@ -14,6 +14,10 @@ public class FindCommand extends Command {
 
     @Override
     public String execute() {
+        if (this.userInput.length() < 5) {
+            return Ui.getInvalidArgumentsWarning("find");
+        }
+
         String searchString = this.userInput.substring(5).trim();
         String[] splitSearchString = searchString.split(" ");
         if (searchString.length() <= 0) {
